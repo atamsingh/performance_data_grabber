@@ -1,5 +1,9 @@
 from __future__ import unicode_literals
 
+import sys
+import time
+
+from datetime import datetime
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.support.ui import WebDriverWait
@@ -14,7 +18,6 @@ class ChromeBrowser(object):
 		chrome_options.add_argument('--headless')
 		chrome_options.add_argument("--no-sandbox")
 		chrome_options.add_argument("--aggressive-cache-discard")
-		chrome_options.add_argument("--disk-cache-dir=/dev/null")
 		chrome_options.add_argument("--disk-cache-size=1")
 		return chrome_options
 
@@ -41,3 +44,26 @@ class ChromeBrowser(object):
 	def cycle_driver(self):
 		self.browser.quit()
 		self.browser = self.get_chrome_browser()
+
+class NavigationTimingAPI(object):
+
+	def _create_dict_of_timings(self, driver, site):
+		return driver.execute_script("return window.performance.timing.toJSON()")
+
+	def apply(self, site, driver):
+		driver.get(site)
+		return self._create_dict_of_timings(driver, site)
+
+chrome = ChromeBrowser()
+
+def handle_navigation_api(address_to_be_pinged):
+	return json.dumps(NavigationTimingAPI().apply(address_to_be_pinged, chrome))
+
+def handle_request(request):
+	request_args = request.args
+	if request_args and 'address' in request_args:
+		address = request_args['address']
+		return handle_navigation_api(address)
+	else:
+		return ""
+
