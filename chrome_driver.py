@@ -18,7 +18,6 @@ class ChromeBrowser(object):
 		chrome_options.add_argument('--headless')
 		chrome_options.add_argument("--no-sandbox")
 		chrome_options.add_argument("--aggressive-cache-discard")
-		chrome_options.add_argument("--disk-cache-dir=/dev/null")
 		chrome_options.add_argument("--disk-cache-size=1")
 		return chrome_options
 
