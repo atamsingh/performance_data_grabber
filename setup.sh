@@ -1,10 +1,22 @@
 #!/bin/bash
-wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
-sh -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
-apt-get update
-apt-get install -y google-chrome-stable
-apt-get install -y python-setuptools
-apt-get install -y chromium-browser
-easy_install pip
-pip install -r requirements.txt
-FLASK_APP=server.py flask run -h 0.0.0.0 -p 80
+
+cd /
+sudo mkdir app
+cd /app/
+
+# GET PHANTOMJS
+sudo apt-get install build-essential chrpath libssl-dev libxft-dev libfreetype6-dev libfreetype6 libfontconfig1-dev libfontconfig1 -y
+sudo wget https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-linux-x86_64.tar.bz2 -O /app/phantomjs.tar.bz2
+sudo tar xvjf /app/phantomjs.tar.bz2 -C /app/
+
+# GET SERVER FILE
+sudo wget https://gist.githubusercontent.com/atamsingh/70717db3c7f3d506eb5aab5ea1014407/raw/ca20db6c82e6584c069b72f83cec6a7f50f72fbf/server.js -O /app/server.js
+
+# GET NODE AND NPM
+sudo apt-get install -y curl python-software-properties
+curl -sL https://deb.nodesource.com/setup_11.x | sudo -E bash -
+sudo apt-get install -y nodejs
+
+# KICK APP IN BACKGROUND
+sudo /app/phantomjs-2.1.1-linux-x86_64/bin/phantomjs /app/server.js &
+EOF
