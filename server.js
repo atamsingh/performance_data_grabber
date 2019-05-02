@@ -1,35 +1,25 @@
-var webserver = require('webserver');
-var system = require('system');
+var http = require('http')
+var url = require('url')
+var fs = require('fs')
+var exec = require('child_process').exec
+var path = require('path')
+var phantomjs = require('phantomjs')
+var binPath = phantomjs.path
+const uuid = require('uuid/v4')
 
-function urlToAddress(url_string) {
-	var rx = /address=(.+?)(&|$)/gm;
-	var arr = rx.exec(url_string);
-	return arr[1]
-}
 
-var server = webserver.create();
-console.log('starting server...')
-var service = server.listen('0.0.0.0:8000', function(request, response) {
-	url = urlToAddress(request.url);
-	console.log(url)
-	var page = require('webpage').create();
-	page.clearMemoryCache();
-	window.setTimeout(function(){
-		response.statusCode = 408;
-		response.write("");
-		response.close();
-		page.close();
-	}, 20000);
-	page.open(url, function (status) {
-		if (status == 'success'){
-			window.setTimeout(function () { 
-				var webpage_navigation_data = page.evaluate(function(){
-					return JSON.stringify(window.performance.timing);
-				})
-				response.statusCode = 200;
-				response.write(webpage_navigation_data);
-				response.close();
-			}, 7000);
-		}
-	})
-});
+
+var server = http.createServer(function (req, res) {
+  res.writeHead(200, {'Content-Type': 'text/html'});
+  var q = url.parse(req.url, true).query;
+  file_name = uuid() + ".json";
+  var txt = binPath  + " " + __dirname + "/fetch_timings.js " + q.address + " " + file_name;
+  console.log(txt)
+  exec(txt, function(error, stdout, stderr, callback) {
+    console.log(stdout);
+    contents = fs.readFileSync(file_name, 'utf8');
+    fs.unlinkSync(file_name);
+    console.log(contents);
+    process.exit()
+  })
+}).listen(8000);
