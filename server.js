@@ -4,10 +4,10 @@ var fs = require('fs')
 var exec = require('child_process').exec
 var path = require('path')
 var phantomjs = require('phantomjs')
+var uuid = require('uuidv4')
+
+
 var binPath = phantomjs.path
-const uuid = require('uuid/v4')
-
-
 
 var server = http.createServer(function (req, res) {
   res.writeHead(200, {'Content-Type': 'text/html'});

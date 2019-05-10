@@ -18,6 +18,9 @@ sudo apt-get install -y curl python-software-properties
 curl -sL https://deb.nodesource.com/setup_11.x | sudo -E bash -
 sudo apt-get install -y nodejs
 
+# INSTALL NODE DEP.
+npm install
+
 # KICK APP IN BACKGROUND
-sudo node /app/server.js &
+sudo /app/node_modules/forever/bin/forever start /app/server.js
 EOF

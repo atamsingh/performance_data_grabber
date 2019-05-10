@@ -1,0 +1,15 @@
+{
+  "name": "performance-data-grabber",
+  "version": "1.0.0",
+  "description": "multi region performance data grabber",
+  "dependencies": {
+    "child_process": "^1.0.2",
+    "forever": "^1.0.0",
+    "fs": "0.0.1-security",
+    "http": "0.0.0",
+    "path": "^0.12.7",
+    "phantomjs": "^2.1.7",
+    "url": "^0.11.0",
+    "uuidv4": "^4.0.0"
+  }
+}
