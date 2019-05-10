@@ -11,16 +11,17 @@ sudo wget https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-linux-
 sudo tar xvjf /app/phantomjs.tar.bz2 -C /app/
 
 # CLONE PROJECT FROM GIT
-git clone --bare /atamsingh/performance_data_grabber /app/
+sudo git clone git://github.com/atamsingh/performance_data_grabber /repo/
 
 # GET NODE AND NPM
 sudo apt-get install -y curl python-software-properties
 curl -sL https://deb.nodesource.com/setup_11.x | sudo -E bash -
 sudo apt-get install -y nodejs
+cd /repo
 
 # INSTALL NODE DEP.
-npm install
+sudo npm install
 
 # KICK APP IN BACKGROUND
-sudo /app/node_modules/forever/bin/forever start /app/server.js
+sudo /repo/node_modules/forever/bin/forever start /repo/server.js
 EOF
