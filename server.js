@@ -19,7 +19,6 @@ var server = http.createServer(function (req, res) {
     console.log(stdout);
     contents = fs.readFileSync(file_name, 'utf8');
     fs.unlinkSync(file_name);
-    console.log(contents);
-    process.exit()
+    res.write(contents);
   })
 }).listen(8000);

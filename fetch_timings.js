@@ -10,6 +10,7 @@ page.clearMemoryCache();
 window.setTimeout(function(){
   console.log('URL did not work')
 	page.close();
+  phantom.exit()
 }, 20000);
 page.open(url, function (status) {
 	if (status == 'success'){
