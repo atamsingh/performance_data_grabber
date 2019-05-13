@@ -22,6 +22,9 @@ cd /repo
 # INSTALL NODE DEP.
 sudo npm install
 
+# SET /REPO DIRECTORY AS WRITEABLE
+sudo chmod 777 /repo
+
 # KICK APP IN BACKGROUND
 sudo /repo/node_modules/forever/bin/forever start /repo/server.js
 EOF
