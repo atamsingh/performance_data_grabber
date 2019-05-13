@@ -24,4 +24,4 @@ var server = http.createServer(function (req, res) {
     res.writeHead(200, {"Content-Type": "application.json"});
     res.end(contents);
   })
-}).listen(8000);
+}).listen(80);
