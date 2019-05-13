@@ -16,9 +16,12 @@ var server = http.createServer(function (req, res) {
   var txt = binPath  + " " + "/repo/fetch_timings.js " + q.address + " " + file_name;
   console.log(txt)
   exec(txt, function(error, stdout, stderr, callback) {
-    console.log(stdout);
+    console.log("Reading file...")
     contents = fs.readFileSync(file_name, 'utf8');
+    console.log("Deleting file...")
     fs.unlinkSync(file_name);
-    res.write(contents);
+    console.log("File deleted");
+    res.writeHead(200, {"Content-Type": "application.json"});
+    res.end(contents);
   })
 }).listen(8000);
