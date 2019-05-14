@@ -9,7 +9,7 @@ window.setTimeout(function(){
   console.log('URL did not work')
 	page.close();
   phantom.exit()
-}, 30000);
+}, 60000);
 page.open(url, function (status) {
 	if (status == 'success'){
 		window.setTimeout(function () { 
