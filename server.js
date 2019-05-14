@@ -25,7 +25,6 @@ function processRequest(req, res) {
     console.log("Deleting file...")
     fs.unlinkSync(file_name);
     console.log("File deleted");
-    res.writeHead(200, {"Content-Type": "application.json"});
     res.end(contents);
   })
 }
