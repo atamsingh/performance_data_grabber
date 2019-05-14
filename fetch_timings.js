@@ -1,9 +1,7 @@
-var fs = require('fs')
 var system = require('system')
 
 console.log('fetch timings accessed!')
 url = system.args[1]
-file_name = system.args[2]
 var page = require('webpage').create();
 page.clearMemoryCache();
 
@@ -11,7 +9,7 @@ window.setTimeout(function(){
   console.log('URL did not work')
 	page.close();
   phantom.exit()
-}, 20000);
+}, 30000);
 page.open(url, function (status) {
 	if (status == 'success'){
 		window.setTimeout(function () { 
@@ -19,7 +17,8 @@ page.open(url, function (status) {
 				return JSON.stringify(window.performance.timing);
 			})
 
-      fs.write(file_name, webpage_navigation_data, 'w')
+      console.clear()
+      console.log(webpage_navigation_data)
       phantom.exit()
 		}, 7000);
 	}
