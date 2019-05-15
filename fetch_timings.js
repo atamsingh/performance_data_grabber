@@ -10,13 +10,14 @@ window.setTimeout(function(){
 	page.close();
   phantom.exit()
 }, 60000);
-page.clearMemoryCache();
 page.open(url, function (status) {
 	if (status == 'success'){
 		window.setTimeout(function () {
 			var webpage_navigation_data = page.evaluate(function(){
 				return JSON.stringify(window.performance.timing);
 			})
+      page.clearCookies();
+      page.clearMemoryCache();
       webpage_navigation_data = webpage_navigation_data.substring(0, webpage_navigation_data.length - 1) + ',"address":"' + url + '"}'
       console.clear()
       console.log(webpage_navigation_data)
